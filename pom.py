@@ -13,17 +13,18 @@ except ImportError:
 
 
 def main():
+    timer = threading.Thread(target=pom, args=args())
+    timer.daemon = True
     try:
-        pom(*args())
+        timer.start()
+        timer.join()
     except KeyboardInterrupt:
         print("\nTimer interrupted")
-    finally:
-        ...
 
 
 def pom(pom_count: int, work_time: int, break_time: int) -> None:
     print(f"Starting the a session of {pom_count} {work_time}/{break_time} poms. {dt.now().strftime("%H:%M")}")
-    for i in range(pom_count):
+    for i in range(1, pom_count + 1):
         if i > 1: print(f"Starting pom #{i}, get back to work! {dt.now().strftime("%H:%M")}")
         time.sleep(work_time * 60)
         chime.success()
