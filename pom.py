@@ -1,5 +1,6 @@
 import argparse
 from datetime import datetime as dt
+import threading
 import sys
 import time
 
@@ -12,11 +13,16 @@ except ImportError:
 
 
 def main():
-    pom(*args())
+    try:
+        pom(*args())
+    except KeyboardInterrupt:
+        print("\nTimer interrupted")
+    finally:
+        ...
 
 
 def pom(pom_count: int, work_time: int, break_time: int) -> None:
-    print(f"Starting the a session of {pom_count} {work_time}/{break_time}poms. {dt.now().strftime("%H:%M")}")
+    print(f"Starting the a session of {pom_count} {work_time}/{break_time} poms. {dt.now().strftime("%H:%M")}")
     for i in range(pom_count):
         if i > 1: print(f"Starting pom #{i}, get back to work! {dt.now().strftime("%H:%M")}")
         time.sleep(work_time * 60)
